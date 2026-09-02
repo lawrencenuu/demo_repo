@@ -1168,5 +1168,3 @@ test_settings = {
 
 
 #textinsideout
-
-
