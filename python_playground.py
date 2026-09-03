@@ -1168,3 +1168,38 @@ test_settings = {
 
 
 #textinsideout
+percentages = [50,30,10]
+categories = ['Clothing', 'Food', 'Lunch']
+longest_category = max(categories, key=lambda category: len(category.name).name)
+result ='Percentage spent by category\n'
+for num in range(100,-10,-10):
+        row = f'{num:>3}|'
+        for percentage in percentages: 
+            if percentage >= num:
+                  row +=" o "
+            else: 
+                  row +="   "
+        result += row + '\n'
+
+result += ' ' * 3 + '-' * (3 * len(percentages) + 2) + '\n'
+
+for j in range(longest_category):
+
+    for i in range(len(categories)):
+
+        if j < len(categories[i].name):
+            result += categories[i].name[j]
+        else:
+            result += " "
+
+    result += "\n"
+
+print(result)
+
+# for j in range(max_length):
+#     for i in range(num):
+#         if j < len(text[i]):
+#             print(text[i][j], end=" ")
+#         else:
+#             print(" ", end=" ")
+#     print()
