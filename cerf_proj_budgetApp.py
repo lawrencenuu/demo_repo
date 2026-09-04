@@ -50,11 +50,13 @@ def create_spend_chart(categories):
     total_spent = 0
     percentages = []
 
+    # Calculate total spending across all categories
     for category in categories:
         for transaction in category.ledger:
             if transaction['amount'] < 0:
                 total_spent += abs(transaction['amount'])
 
+    # Calculate spending percentage for each category
     for category in categories:
         category_spent = 0
 
@@ -62,13 +64,15 @@ def create_spend_chart(categories):
             if transaction['amount'] < 0:
                 category_spent += abs(transaction['amount'])
 
-        percentages.append((category_spent / total_spent * 100) // 10 * 10)
+        percentage = (category_spent / total_spent) * 100
+        percentages.append(int(percentage // 10) * 10)
 
+    # Find the longest category name
     longest_category = max(categories, key=lambda category: len(category.name))
 
     result = 'Percentage spent by category\n'
 
-    # Bars
+    # Create the percentage bars
     for num in range(100, -10, -10):
         row = f'{num:>3}|'
 
@@ -78,25 +82,27 @@ def create_spend_chart(categories):
             else:
                 row += '   '
 
-        row += '  '
+        # Two spaces after the final bar
+        row += ' '
+
         result += row + '\n'
 
     # Horizontal line
-    result += '    ' + '-' * (3 * len(categories) + 2) + '\n'
+    result += '    ' + '-' * (3 * len(categories) + 1) + '\n'
 
-    # Vertical category names
-    for j in range(len(longest_category.name)):
+    # Category names vertically
+    for i in range(len(longest_category.name)):
         row = '     '
 
         for category in categories:
-            if j < len(category.name):
-                row += category.name[j] + '  '
+            if i < len(category.name):
+                row += category.name[i] + '  '
             else:
                 row += '   '
 
         result += row
 
-        if j < len(longest_category.name) - 1:
+        if i < len(longest_category.name) - 1:
             result += '\n'
 
     return result
